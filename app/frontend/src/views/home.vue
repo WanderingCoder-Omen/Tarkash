@@ -1,6 +1,6 @@
 <template>
     <div class="center">
-        <p></p><img src="@/assets/mcte-logo.png" id="mcte-logo" /></p>
+        <p><img src="@/assets/mcte-logo.png" id="mcte-logo" /></p>
         <h3 class="lobster">{{ $t("home.welcome_msg") }}<sup>{{current_version}}</sup></h3>
         <p>{{ $t("home.help_msg") }}</p>
         <p>{{ $t("home.dev_msg") }}</p>
