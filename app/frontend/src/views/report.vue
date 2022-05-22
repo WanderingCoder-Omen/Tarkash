@@ -86,6 +86,7 @@
                     <div class="column col-5">
                         <button class="btn btn btn-primary width-100" v-on:click="save_capture()">{{ $t("report.save_report") }}</button>
                     </div>
+                    
             </div>
         </div>
     </div>
