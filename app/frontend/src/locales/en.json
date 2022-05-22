@@ -1,15 +1,15 @@
 {
   "home": {
     "welcome_msg": "Welcome to Tarkash-M",
-    "help_msg": "Use the power of AI to keep your smartphone free from malware.",
-    "dev_msg": "Developed at the Military College of Telecom Engineering - Center of Excellence for AI.",
+    "help_msg": "Use the power of Artificial Intelligence to keep your smartphone free from malware.",
+    "dev_msg": "Developed at MCTE - Center of Excellence for AI.",
     "start_btn": "Let's start!"
   },
   "analysis": {
     "question": "Do you want to analyze the recorded communications?",
     "no_btn": "No, just save them",
     "yes_btn": "Yes, let's do it",
-    "please_wait_msg": "Analytics Engine is running...",
+    "please_wait_msg": "Analytics Engine is looking for malware...",
     "some_time_msg": "Please be patient ..."
   },
   "capture": {
