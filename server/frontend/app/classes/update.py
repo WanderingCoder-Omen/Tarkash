@@ -12,13 +12,13 @@ import re
 class Update(object):
 
     def __init__(self):
-        self.project_url = "https://api.github.com/repos/KasperskyLab/TinyCheck/tags"
+        self.project_url = "https://api.github.com/repos/WanderingCoder-Omen/Tarkash/tags"
         self.app_path = "/usr/share/tinycheck"
         return None
 
     def check_version(self):
         """
-            Check if a new version of TinyCheck is available 
+            Check if a new version of Tarkash is available 
             by quering the Github api and comparing the last
             tag inside the VERSION file.
             :return: dict containing the available versions.

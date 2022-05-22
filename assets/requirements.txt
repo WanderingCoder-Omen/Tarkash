@@ -14,5 +14,5 @@ pyudev
 wifi
 qrcode
 netifaces
-weasyprint
+weasyprint==52.5
 python-whois
