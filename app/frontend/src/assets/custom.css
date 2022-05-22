@@ -441,7 +441,7 @@ footer {
 }
 
 #sparkline {
-    stroke: red;
+    stroke: blue;
     fill: whitesmoke;
     bottom: 0;
     position: fixed;
