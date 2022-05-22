@@ -1,11 +1,11 @@
 
 delete_folder(){
-    echo "[+] Deleting TinyCheck folders"
+    echo "[+] Deleting Tarkash folders"
     rm -rf /usr/share/tinycheck/
 }
 
 delete_services(){
-    echo "[+] Deleting TinyCheck services"
+    echo "[+] Deleting Tarkash services"
 
     systemctl disable tinycheck-frontend &> /dev/null
     systemctl disable tinycheck-backend &> /dev/null
@@ -26,7 +26,7 @@ updating_config_files(){
 
 deleting_icon(){
     echo "[+] Deleting desktop icon"
-    rm "/home/${SUDO_USER}/Desktop/tinycheck.desktop"
+    rm "/home/${SUDO_USER}/Desktop/tarkash.desktop"
 }
 
 delete_packages(){
@@ -59,7 +59,7 @@ update_hostname(){
 }
 
 reboot_box() {
-    echo -e "\e[92m[+] TinyCheck uninstalled, let's reboot.\e[39m"
+    echo -e "\e[92m[+] Tarkash uninstalled, let's reboot.\e[39m"
     sleep 5
     reboot
 }

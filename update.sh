@@ -7,14 +7,14 @@ fi
 if [ $PWD = "/usr/share/tinycheck" ]; then
     echo "[+] Cloning the current repository to /tmp/"
     rm -rf /tmp/tinycheck/ &> /dev/null 
-    cd /tmp/ && git clone https://github.com/KasperskyLab/tinycheck
+    cd /tmp/ && git clone https://github.com/WanderingCoder-Omen/Tarkash
     cd /tmp/tinycheck && bash update.sh
 elif [ $PWD = "/tmp/tinycheck" ]; then
 
     echo "[+] Saving current backend's SSL configuration in /tmp/"
     mv /usr/share/tinycheck/server/backend/*.pem /tmp/
 
-    echo "[+] Deleting the current TinyCheck folders and files."
+    echo "[+] Deleting the current Tarkash folders and files."
     rm -rf /usr/share/tinycheck/app/
     rm -rf /usr/share/tinycheck/server/
     rm -rf /usr/share/tinycheck/analysis/
@@ -22,7 +22,7 @@ elif [ $PWD = "/tmp/tinycheck" ]; then
     rm /usr/share/tinycheck/kiosk.sh
     rm /usr/share/tinycheck/uninstall.sh
 
-    echo "[+] Copying the new TinyCheck version"
+    echo "[+] Copying the new Tarkash version"
     cp -R app/ /usr/share/tinycheck/app/
     cp -R server/ /usr/share/tinycheck/server/
     cp -R analysis/ /usr/share/tinycheck/analysis/
@@ -82,8 +82,8 @@ elif [ $PWD = "/tmp/tinycheck" ]; then
     service tinycheck-frontend restart
     service tinycheck-watchers restart
 
-    echo "[+] Updating the TinyCheck version"
+    echo "[+] Updating the Tarkash version"
     cd /tmp/tinycheck && git tag | tail -n 1 | xargs echo -n > /usr/share/tinycheck/VERSION
 
-    echo "[+] TinyCheck updated!"
+    echo "[+] Tarkash updated!"
 fi

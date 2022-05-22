@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This small script is started by the service tinycheck-kiosk
-# in order to launch TinyCheck frontend in kiosk mode. 
+# in order to launch Tarkash frontend in kiosk mode. 
 
 xset s noblank
 xset s off

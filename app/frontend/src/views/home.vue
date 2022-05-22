@@ -2,6 +2,8 @@
     <div class="center">
         <h3 class="lobster">{{ $t("home.welcome_msg") }}<sup>{{current_version}}</sup></h3>
         <p>{{ $t("home.help_msg") }}</p>
+        <p>{{ $t("home.dev_msg") }}</p>
+        <img src="@/assets/mcte-logo.jpg" id="mcte-logo" />
         <button class="btn btn-primary" v-on:click="next()">{{ $t("home.start_btn") }}</button>
     </div>
 </template>
