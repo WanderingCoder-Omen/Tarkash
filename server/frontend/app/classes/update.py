@@ -48,7 +48,7 @@ class Update(object):
 
     def get_current_version(self):
         """
-            Get the current version of the TinyCheck instance
+            Get the current version of the Tarkash instance
             :return: dict containing the current version or error.
         """
         if read_config(("frontend", "update")):
