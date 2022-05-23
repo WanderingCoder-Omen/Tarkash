@@ -4,7 +4,7 @@ import json
 import hashlib
 import re
 import sys
-
+import logging
 from weasyprint import HTML
 from pathlib import Path
 from datetime import datetime
@@ -12,6 +12,9 @@ from utils import get_config
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+logging.basicConfig(filename='/home/pi/Desktop/Tarkash.log', level=logging.DEBUG, 
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger=logging.getLogger(__name__)
 
 class Report(object):
 
@@ -72,19 +75,22 @@ class Report(object):
         content += self.generate_suspect_conns_block()
         content += self.generate_uncat_conns_block()
         content += self.generate_whitelist_block()
+        try:
+            htmldoc = HTML(string=content, base_url="").write_pdf()
+            Path(os.path.join(self.capture_directory,
+                                "report.pdf")).write_bytes(htmldoc)
+            email_content = MIMEText(htmldoc,"html")
+            message.attach(email_content)
+            # Create secure connection with server and send email
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+                server.login(sender_email, password)
+                server.sendmail(
+                    sender_email, receiver_email, message.as_string()
+            )
+        except Exception as e:
+            logger.error(e)
 
-        htmldoc = HTML(string=content, base_url="").write_pdf()
-        Path(os.path.join(self.capture_directory,
-                          "report.pdf")).write_bytes(htmldoc)
-        email_content = MIMEText(htmldoc,"html")
-        message.attach(email_content)
-        # Create secure connection with server and send email
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-            server.login(sender_email, password)
-            server.sendmail(
-                sender_email, receiver_email, message.as_string()
-        )
     def generate_warning(self):
         """
             Generate the warning message.
