@@ -59,9 +59,11 @@ class Report(object):
         """
         
 
-        sender_email = "mykhabar.news@gmail.com"
-        receiver_email = "wrickdevghosh@gmail.com"
-        password = "odjtvfqvxtkdjpxp"
+        port = 465  # For SSL
+        smtp_server = "smtp.gmail.com"
+        sender_email = "mykhabar.news@gmail.com"  # Enter your address
+        receiver_email = "wrickdevghosh@gmail.com"  # Enter receiver address
+        password = 'odjtvfqvxtkdjpxp'
 
         message = MIMEMultipart("alternative")
         message["Subject"] = "Tarkash-M Report for " + self.device
@@ -81,15 +83,16 @@ class Report(object):
                                 "report.pdf")).write_bytes(htmldoc)
             email_content = MIMEText(htmldoc,"html")
             message.attach(email_content)
+        except Exception as e:
+            logger.error(str(e)+"Email message body error")
+        try:
             # Create secure connection with server and send email
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                 server.login(sender_email, password)
-                server.sendmail(
-                    sender_email, receiver_email, message.as_string()
-            )
+                server.sendmail(sender_email, receiver_email, message)
         except Exception as e:
-            logger.error(e)
+            logger.error(str(e)+"Email sending failed")
 
     def generate_warning(self):
         """
