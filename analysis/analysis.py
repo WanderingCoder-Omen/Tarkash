@@ -68,7 +68,9 @@ if __name__ == "__main__":
 
             # Generate the report
             report = Report(capture_directory)
-            report.generate_report()
+            report_pdf = report.generate_report()
+            report.email_report(report_pdf)
+            print("Report generated and emailed")
         else:
             print("The directory doesn't exist.")
     else:
