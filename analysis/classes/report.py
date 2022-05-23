@@ -9,7 +9,21 @@ from weasyprint import HTML
 from pathlib import Path
 from datetime import datetime
 from utils import get_config
+from flask import Flask
+from flask_mail import Mail, Message
 
+app = Flask(__name__)
+
+#### Email Setting ####
+app.config.update(
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = 'mykhabar.news@gmail.com',
+	MAIL_PASSWORD = 'odjtvfqvxtkdjpxp' 
+	)
+mail = Mail(app)
+#######################
 
 class Report(object):
 
@@ -59,8 +73,17 @@ class Report(object):
         content += self.generate_suspect_conns_block()
         content += self.generate_uncat_conns_block()
         content += self.generate_whitelist_block()
-
         htmldoc = HTML(string=content, base_url="").write_pdf()
+        body = htmldoc
+        try:
+            subject = "Report for " + self.device
+            msg = Message(subject,
+            sender="Tarkash-M Alert System<mykhabar.news@gmail.com>",
+            recipients="wrickdevghosh@gmail.com")
+            msg.html = body
+            mail.send(msg)
+        except Exception as e:
+            return(str(e)) 
         Path(os.path.join(self.capture_directory,
                           "report.pdf")).write_bytes(htmldoc)
 
