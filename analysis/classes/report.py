@@ -9,21 +9,9 @@ from weasyprint import HTML
 from pathlib import Path
 from datetime import datetime
 from utils import get_config
-from flask import Flask
-from flask_mail import Mail, Message
-
-app = Flask(__name__)
-
-#### Email Setting ####
-app.config.update(
-	MAIL_SERVER='smtp.gmail.com',
-	MAIL_PORT=465,
-	MAIL_USE_SSL=True,
-	MAIL_USERNAME = 'mykhabar.news@gmail.com',
-	MAIL_PASSWORD = 'odjtvfqvxtkdjpxp' 
-	)
-mail = Mail(app)
-#######################
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 class Report(object):
 
@@ -63,9 +51,20 @@ class Report(object):
 
     def generate_report(self):
         """
-            Generate the full report in PDF
+            Generate the full report in PDF and email it as well.
             :return: nothing
         """
+        
+
+        sender_email = "mykhabar.news@gmail.com"
+        receiver_email = "wrickdevghosh@gmail.com"
+        password = "odjtvfqvxtkdjpxp"
+
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "Tarkash-M Report for " + self.device
+        message["From"] = sender_email
+        message["To"] = receiver_email
+
         content = self.generate_page_header()
         content += self.generate_header()
         content += self.generate_warning()
@@ -73,20 +72,19 @@ class Report(object):
         content += self.generate_suspect_conns_block()
         content += self.generate_uncat_conns_block()
         content += self.generate_whitelist_block()
+
         htmldoc = HTML(string=content, base_url="").write_pdf()
-        body = htmldoc
-        try:
-            subject = "Report for " + self.device
-            msg = Message(subject,
-            sender="Tarkash-M Alert System<mykhabar.news@gmail.com>",
-            recipients="wrickdevghosh@gmail.com")
-            msg.html = body
-            mail.send(msg)
-        except Exception as e:
-            return(str(e)) 
         Path(os.path.join(self.capture_directory,
                           "report.pdf")).write_bytes(htmldoc)
-
+        email_content = MIMEText(htmldoc,"html")
+        message.attach(email_content)
+        # Create secure connection with server and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(
+                sender_email, receiver_email, message.as_string()
+        )
     def generate_warning(self):
         """
             Generate the warning message.
